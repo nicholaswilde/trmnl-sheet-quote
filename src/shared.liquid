@@ -1,0 +1,56 @@
+<div class="container">
+	<div class="quote-box">
+		<span id="quote">Loading wisdom…</span>
+	</div>
+	<div class="footer">
+		The Wisdom Project — Merlin Mann — <a href="http://wisdom.limo">wisdom.limo</a>
+	</div>
+</div>
+
+<script>
+	function markdownToHTML (text) {
+		return text
+			.replace(/^-\s+/, '')                            // Remove leading "- "
+			.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') // Bold
+			.replace(/\*(.*?)\*/g, '<em>$1</em>')             // Italic
+			.replace(/`([^`]+)`/g, '<code>$1</code>')         // Inline code
+			.replace(/~~(.*?)~~/g, '<s>$1</s>');              // Strikethrough
+	}
+
+	function hashString (str) {
+		let hash = 0;
+		for (let i = 0; i < str.length; i++) {
+			hash = ((hash << 5) - hash) + str.charCodeAt(i);
+			hash |= 0;
+		}
+		return Math.abs(hash);
+	}
+
+	async function getQuote () {
+		const url = 'https://raw.githubusercontent.com/merlinmann/wisdom/master/wisdom.md';
+		const res = await fetch(url);
+		const text = await res.text();
+
+		const [, afterHeader] = text.split(/The Wisdom so far/i);
+		const [wisdomBlock] = afterHeader.split(/Works Cited/i);
+
+		if (!wisdomBlock) {
+			document.querySelector('#quote').textContent = 'No wisdom found.';
+			return;
+		}
+
+		const quotes = wisdomBlock
+			.split('\n')
+			.map(q => q.trim().replace(/^-\s+/, ''))
+			.filter(q => q.length > 0 && !/^[-*_]{3,}$/.test(q));
+
+		// Pick a deterministic quote based on today's date
+		const dateSeed = new Date().toISOString().slice(0, 10); // "YYYY-MM-DD"
+		const quoteIndex = hashString(dateSeed) % quotes.length;
+		const selected = quotes[quoteIndex];
+
+		document.querySelector('#quote').innerHTML = markdownToHTML(selected);
+	}
+
+	getQuote();
+</script>
