@@ -1,55 +1,36 @@
-<style>
-	body {
-		margin: 0;
-		padding: 0;
-	}
+<div class="layout">
+  <div class="columns">
+    <div class="column">
+      <div class="markdown gap--large">
+        <div class="richtext richtext--center gap--xxlarge">
+          <div class="content content--large --center gap--medium text--center">
+            <span class="value value--xxlarge" data-value-fit="true" data-value-fit-max-height="170">
+              <span id="quote">Loading quote…</span>
+            </span>
+            <div class="value value--small">
+              <span id="author">Author</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
-	.container {
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		align-items: center;
-		height: 100vh;
-		text-align: center;
-		padding: 1em;
-		box-sizing: border-box;
-	}
-
-	.quote-box {
-		font-family: Georgia, 'Palatino Linotype', serif;
-		font-size: 1.3em;
-		line-height: 1.5;
-		position: relative;
-		margin-bottom: 2em;
-		max-width: 90%;
-	}
-
-	.quote-box::before {
-		content: "“";
-		font-size: 2.5em;
-		position: absolute;
-		top: 0;
-		left: -0.6em;
-		line-height: 1;
-	}
-
-	.quote-box::after {
-		content: "”";
-		font-size: 2.5em;
-		position: absolute;
-		bottom: 0;
-		right: -0.6em;
-		line-height: 0.5;
-	}
-
-	#quote {
-		display: inline-block;
-		margin: 0 1em;
-	}
-
-	.footer {
-		font-family: sans-serif;
-		font-size: 0.75em;
-		color: black;
-	}
-</style>
+<div class="title_bar">
+  <img class="image" src="https://usetrmnl.com/images/plugins/trmnl--render.svg">
+  <span class="title">{{ trmnl.plugin_settings.instance_name }}</span>
+  <span class="instance">Display quotes from a Google Sheet</span>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/dompurify@2.3.6/dist/purify.min.js"></script>
+<script type="text/javascript">
+  async function getQuote() {
+    {% assign formatted_data = data | slice: 1, data.size - 1 %};
+    {% assign quoteIndex = "now" | date: "%N" | modulo: formatted_data.size - 1 %};
+    {% assign quote2Index = trmnl.plugin_settings.custom_fields_values.quote_index|plus:0 %};
+    {% assign authorIndex = trmnl.plugin_settings.custom_fields_values.author_index|plus:0 %};
+    document.querySelector('#quote').innerHTML = DOMPurify.sanitize( {{ formatted_data[quoteIndex][quote2Index] | json }});
+    document.querySelector('#author').innerHTML = DOMPurify.sanitize( {{ formatted_data[quoteIndex][authorIndex] | json }});
+  }
+  getQuote();
+</script>
