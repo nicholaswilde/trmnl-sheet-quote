@@ -38,6 +38,6 @@ This project is licensed under the Apache License 2.0. See the [LICENSE](LICENSE
 
 ## :pencil:​ Author
 
-​This project was started in 2024 by [Nicholas Wilde][2].
+​This project was started in 2025 by [Nicholas Wilde][2].
 
 [2]: <https://github.com/nicholaswilde/>
