@@ -2,6 +2,8 @@
 
 A private plugin for [TRMNL](https://usetrmnl.com) to display quotes from a Google Sheet.
 
+![sheet-quote](https://raw.githubusercontent.com/nicholaswilde/trmnl-sheet-quote/refs/heads/main/src/img/screenshot.png)
+
 ## :rocket: Features
 
 -   Displays a random quote from a Google Sheet.
