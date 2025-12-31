@@ -26,11 +26,15 @@
 <script type="text/javascript">
   async function getQuote() {
     {% assign formatted_data = data | slice: 1, data.size - 1 %};
-    {% assign quoteIndex = "now" | date: "%N" | modulo: formatted_data.size - 1 %};
-    {% assign quote2Index = trmnl.plugin_settings.custom_fields_values.quote_index|plus:0 %};
-    {% assign authorIndex = trmnl.plugin_settings.custom_fields_values.author_index|plus:0 %};
-    document.querySelector('#quote').innerHTML = DOMPurify.sanitize( {{ formatted_data[quoteIndex][quote2Index] | json }});
-    document.querySelector('#author').innerHTML = DOMPurify.sanitize( {{ formatted_data[quoteIndex][authorIndex] | json }});
+    var formatted_data = {{ formatted_data | json }};
+    var quote2Index = {{ trmnl.plugin_settings.custom_fields_values.quote_index | plus: 0 }};
+    var authorIndex = {{ trmnl.plugin_settings.custom_fields_values.author_index | plus: 0 }};
+
+    if (formatted_data && formatted_data.length > 0) {
+      var quoteIndex = Math.floor(Math.random() * formatted_data.length);
+      document.querySelector('#quote').innerHTML = DOMPurify.sanitize(formatted_data[quoteIndex][quote2Index]);
+      document.querySelector('#author').innerHTML = DOMPurify.sanitize(formatted_data[quoteIndex][authorIndex]);
+    }
   }
   getQuote();
 </script>
