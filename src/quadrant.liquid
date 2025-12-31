@@ -32,8 +32,12 @@
 
     if (formatted_data && formatted_data.length > 0) {
       var quoteIndex = Math.floor(Math.random() * formatted_data.length);
-      document.querySelector('#quote').innerHTML = DOMPurify.sanitize(formatted_data[quoteIndex][quote2Index]);
-      document.querySelector('#author').innerHTML = DOMPurify.sanitize(formatted_data[quoteIndex][authorIndex]);
+      var row = formatted_data[quoteIndex];
+      var quoteContent = row[quote2Index] || "Quote column (index " + quote2Index + ") not found";
+      var authorContent = row[authorIndex] || "";
+
+      document.querySelector('#quote').innerHTML = DOMPurify.sanitize(quoteContent);
+      document.querySelector('#author').innerHTML = DOMPurify.sanitize(authorContent);
     }
   }
   getQuote();
