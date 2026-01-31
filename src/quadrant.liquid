@@ -22,23 +22,51 @@
   <span class="title">{{ trmnl.plugin_settings.instance_name }}</span>
   <span class="instance">Display a random quote from a Google Sheet</span>
 </div>
-<script src="https://cdn.jsdelivr.net/npm/dompurify@2.3.6/dist/purify.min.js"></script>
 <script type="text/javascript">
-  async function getQuote() {
-    {% assign formatted_data = data | slice: 1, data.size - 1 %};
+  function escapeHTML(str) {
+    if (!str) return "";
+    return str.replace(/[&<>'"]/g, 
+      tag => ({
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        "'": '&#39;',
+        '"': '&quot;'
+      }[tag]));
+  }
+
+  try {
+    console.log("Sheet Quote: Starting execution");
+    {% if data %}
+      {% assign formatted_data = data | slice: 1, data.size - 1 %}
+    {% else %}
+      {% assign formatted_data = "" | split: "" %}
+    {% endif %}
     var formatted_data = {{ formatted_data | json }};
+    console.log("Sheet Quote: Data received. Rows:", formatted_data ? formatted_data.length : "null");
+
     var quote2Index = {{ trmnl.plugin_settings.custom_fields_values.quote_index | plus: 0 }};
     var authorIndex = {{ trmnl.plugin_settings.custom_fields_values.author_index | plus: 0 }};
 
     if (formatted_data && formatted_data.length > 0) {
       var quoteIndex = Math.floor(Math.random() * formatted_data.length);
       var row = formatted_data[quoteIndex];
-      var quoteContent = row[quote2Index] || "Quote column (index " + quote2Index + ") not found";
+      var quoteContent = row[quote2Index];
       var authorContent = row[authorIndex] || "";
 
-      document.querySelector('#quote').innerHTML = DOMPurify.sanitize(quoteContent);
-      document.querySelector('#author').innerHTML = DOMPurify.sanitize(authorContent);
+      if (!quoteContent) {
+        console.warn("Sheet Quote: Quote column empty at row " + quoteIndex + ", col " + quote2Index);
+        quoteContent = "Quote column (index " + quote2Index + ") not found";
+      }
+
+      document.querySelector('#quote').innerHTML = escapeHTML(quoteContent);
+      document.querySelector('#author').innerHTML = escapeHTML(authorContent);
+    } else {
+      console.error("Sheet Quote: formatted_data is empty or null");
+      document.querySelector('#quote').innerHTML = "No data found. Check Spreadsheet ID.";
     }
+  } catch (e) {
+    console.error("Sheet Quote: Critical Error", e);
+    document.querySelector('#quote').innerHTML = "Error: " + e.message;
   }
-  getQuote();
 </script>

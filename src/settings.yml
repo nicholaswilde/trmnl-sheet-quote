@@ -47,4 +47,4 @@ custom_fields:
   learn_more_url: https://nicholaswilde.io/
   email_address: ncwilde43@gmail.com
 name: Sheet Quote
-refresh_interval: 1440
+refresh_interval: 60
