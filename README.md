@@ -1,4 +1,4 @@
-# TRMNL Sheet Quote
+# TRMNL Google Sheet Quote
 
 A private plugin for [TRMNL](https://usetrmnl.com) to display quotes from a Google Sheet.
 
@@ -7,8 +7,9 @@ A private plugin for [TRMNL](https://usetrmnl.com) to display quotes from a Goog
 ## :rocket: Features
 
 -   Displays a random quote from a Google Sheet.
--   Customizable polling interval to fetch new quotes.
+-   Customizable polling interval to fetch new quotes (default: 1 hour).
 -   Configurable columns for quote and author.
+-   Robust error handling with on-screen feedback.
 
 ## :hammer_and_wrench: Installation
 
@@ -25,6 +26,14 @@ Configuration is handled within the TRMNL application. After installing the plug
 -   **Author Column Index**: The column number (starting from 0) for the authors in your sheet.
 
 For more detailed instructions, please see the [TRMNL documentation](https://help.usetrmnl.com/en/articles/11400219-using-google-sheets-with-private-plugins).
+
+## :question: Troubleshooting
+
+If you see "No data found" or the plugin is stuck on "Loading quote…":
+
+1.  **Check Spreadsheet ID:** Ensure the ID is correct and the sheet is shared with "Anyone with the link" (Viewer access).
+2.  **Check Logs:** In the TRMNL dashboard, go to the **Logs** tab for this plugin. Look for "Sheet Quote: Starting execution" to verify the script is running.
+3.  **Error Messages:** The plugin displays specific error messages on the screen if data is missing or malformed to help you debug.
 
 ## :construction: Development
 
