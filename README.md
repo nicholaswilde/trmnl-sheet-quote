@@ -1,4 +1,4 @@
-# TRMNL Google Sheet Quote
+# :framed_picture: TRMNL Google Sheet Quote :bar_chart:
 
 A private plugin for [TRMNL](https://trmnl.com/) to display quotes from a Google Sheet.
 
