@@ -1,6 +1,6 @@
 # TRMNL Google Sheet Quote
 
-A private plugin for [TRMNL](https://usetrmnl.com) to display quotes from a Google Sheet.
+A private plugin for [TRMNL](https://trmnl.com/) to display quotes from a Google Sheet.
 
 ![sheet-quote](https://raw.githubusercontent.com/nicholaswilde/trmnl-sheet-quote/refs/heads/main/src/img/screenshot.png)
 
