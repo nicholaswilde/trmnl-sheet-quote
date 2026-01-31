@@ -28,4 +28,4 @@ The plugin runs within the TRMNL environment; there is no local Node.js or Pytho
 - **Structure:** Keep all plugin source files inside `src/`.
 - **Templating:** Use standard Liquid syntax. Ensure layouts handle dynamic content length gracefully (e.g., long quotes) given the small e-ink screen.
 - **Configuration:** Changes to plugin behavior (like adding new user inputs) happen in `src/settings.yml`.
-- **Versioning:** Update `package.json` version for semantic versioning tracking, even if not used for building.
+- **Versioning:** Use semantic versioning (SemVer) for version tracking, prefixed by a `v` (e.g., `v1.0.0`). Update `package.json` to match this versioning scheme.

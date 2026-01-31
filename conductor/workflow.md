@@ -235,7 +235,7 @@ A task is complete when:
 
 ### Deployment Steps
 1. Merge feature branch to main
-2. Tag release with version
+2. Tag release with semantic versioning prefixed by a `v` (e.g., `v1.0.0`)
 3. Push to deployment service
 4. Run database migrations
 5. Verify deployment
