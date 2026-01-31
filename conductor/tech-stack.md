@@ -14,3 +14,18 @@
 ## Development Tools
 - **Git:** For version control and repository management.
 - **Gemini CLI:** For project management and workflow automation using the Conductor methodology.
+
+## Runtime Environment
+The plugin runs within the TRMNL environment; there is no local Node.js or Python server to run. `package.json` exists primarily for metadata.
+
+## Key Files
+- `src/settings.yml`: The core configuration. Defines the `polling_url` (Google Sheet CSV export), the user-facing input fields (Spreadsheet ID, column indices), and metadata.
+- `src/full.liquid`: The main view template for the full-screen layout.
+- `src/half_horizontal.liquid`, `src/half_vertical.liquid`, `src/quadrant.liquid`: Templates for other TRMNL layout sizes.
+- `src/img/`: Contains assets like the plugin icon and screenshot.
+
+## Conventions
+- **Structure:** Keep all plugin source files inside `src/`.
+- **Templating:** Use standard Liquid syntax. Ensure layouts handle dynamic content length gracefully (e.g., long quotes) given the small e-ink screen.
+- **Configuration:** Changes to plugin behavior (like adding new user inputs) happen in `src/settings.yml`.
+- **Versioning:** Update `package.json` version for semantic versioning tracking, even if not used for building.
